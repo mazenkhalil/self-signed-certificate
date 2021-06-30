@@ -6,7 +6,7 @@
 
 ##### Generate 2048 root CA store [2048 | 10 years]:
 
-``keytool -genkeypair -v -alias root -keystore root.p12 -storetype pkcs12 -keyalg RSA -keysize 2048 -validity 3650 -ext KeyUsage:critical="keyCertSign" -ext BasicConstraints:critical="ca:true"``
+``keytool -genkeypair -v -alias root -keystore root.p12 -storetype pkcs12 -keyalg RSA -keysize 2048 -validity 3650 -ext KeyUsage:critical="keyCertSign,digitalSignature,cRLSign" -ext BasicConstraints:critical="ca:true"``
 
 ##### Extract the root certificate:
 > This certificate can be installed on client devices inorder to get all CA child certificates accepted
@@ -28,7 +28,7 @@
 
 ##### Sign the certificate request [1 year]:
 
-``keytool -gencert -v -alias root -keystore root.p12 -infile signingRequest.csr -validity 365 -outfile signedCert.crt -rfc -ext KeyUsage:critical="digitalSignature" -ext EKU="serverAuth" -ext san=dns:<FQDN>,IP:<IP>``
+``keytool -gencert -v -alias root -keystore root.p12 -infile signingRequest.csr -validity 365 -outfile signedCert.crt -rfc -ext KeyUsage:critical="digitalSignature,keyEncipherment" -ext EKU="serverAuth,clientAuth" -ext san=dns:<FQDN>,IP:<IP>``
 
 ##### Import the root certificate to the store:
 
