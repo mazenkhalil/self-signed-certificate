@@ -95,9 +95,17 @@ authorityKeyIdentifier = keyid:always
 
 ``openssl x509 -outform der -in serverCert.pem -out serverCert.crt``
 
-> Convert to PFX/P12 format
+> Convert to PKCS12 format
 
 ``openssl pkcs12 -export -inkey serverCert.key -in serverCert.pem -certfile rootCA.pem -out serverCert.pfx``
+
+> Extract the root from PKCS12
+
+``openssl pkcs12 -in serverCert.pfx -nokeys -cacerts -out root.crt``
+
+> Extract the certificate from PKCS12
+
+``openssl pkcs12 -in serverCert.pfx -nokeys -out serverCert.crt``
 
 ---
 
